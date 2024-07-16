@@ -153,18 +153,41 @@ function ballHitsWall() {
 }
 
 function ballHitsBrick() {
+// Existing code...
+
+function ballHitsBrick() {
     for (let c = 0; c < brick.columns; c++) {
         for (let r = 0; r < brick.rows; r++) {
-            k = brick.bricks[c][r]
-            if (k.hp === 3 || k.hp === 2 || k.hp === 1) {
-                if (ball.x - ball.r > k.x - brick.xgap && ball.x + ball.r < k.x + brick.width + brick.xgap && ball.y + ball.r > k.y - brick.xgap && ball.y - ball.r < k.y + brick.height + brick.xgap) {
-                    ball.dy = ball.dy * -1
-                    k.hp -= 1
+            let b = brick.bricks[c][r];
+            if (b.hp > 0) {
+                // Check for collision with the brick
+                if (ball.x + ball.r > b.x && ball.x - ball.r < b.x + brick.width && ball.y + ball.r > b.y && ball.y - ball.r < b.y + brick.height) {
+                    // Determine the side of collision
+                    let collideLeft = ball.x - ball.r < b.x;
+                    let collideRight = ball.x + ball.r > b.x + brick.width;
+                    let collideTop = ball.y - ball.r < b.y;
+                    let collideBottom = ball.y + ball.r > b.y + brick.height;
+
+                    // Reflect the ball's direction
+                    if (collideLeft || collideRight) {
+                        ball.dx = -ball.dx;
+                    }
+                    if (collideTop || collideBottom) {
+                        ball.dy = -ball.dy;
+                    }
+
+                    // Reduce the brick's hp
+                    b.hp--;
+
+                    // Exit the function to avoid multiple hits on the same frame
+                    return;
                 }
             }
-
         }
     }
+}
+
+// Existing code...
 }
 
 //#endregion ball
