@@ -59,7 +59,8 @@ ball.x = canvas.width / 2
 ball.y = canvas.height * 0.75
 ball.r = 5
 ball.dx = 0
-ball.dy = 10
+ball.dy = 3
+
 ball.a = 0
 //#endregion VAR ball
 
